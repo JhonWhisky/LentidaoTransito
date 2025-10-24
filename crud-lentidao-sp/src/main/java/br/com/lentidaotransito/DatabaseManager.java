@@ -1,11 +1,15 @@
 package br.com.lentidaotransito;
 
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 public class DatabaseManager {
 
@@ -82,6 +86,77 @@ public class DatabaseManager {
         } catch (SQLException e) {
             System.err.println("Erro durante o batch insert: " + e.getMessage());
         }
+    }
+
+    public List<LentidaoRegistro> buscarRegistros(Map<String, Object> filtros) {
+        List<LentidaoRegistro> resultados = new ArrayList<>();
+        
+        // SQL dinâmico
+        StringBuilder sql = new StringBuilder("SELECT * FROM lentidao WHERE 1=1");
+        List<Object> parametros = new ArrayList<>();
+
+        // Adiciona filtros dinamicamente
+        if (filtros.containsKey("data")) {
+            // Busca pela data exata, ignorando a hora
+            sql.append(" AND date(data) = ?"); 
+            parametros.add(filtros.get("data").toString());
+        }
+        if (filtros.containsKey("corredor")) {
+            sql.append(" AND corredor LIKE ?");
+            parametros.add("%" + filtros.get("corredor") + "%");
+        }
+        if (filtros.containsKey("sentido")) {
+            sql.append(" AND sentido LIKE ?");
+            parametros.add("%" + filtros.get("sentido") + "%");
+        }
+        if (filtros.containsKey("expressa")) {
+            sql.append(" AND expressa = ?");
+            parametros.add(filtros.get("expressa"));
+        }
+        if (filtros.containsKey("tamanhoValor")) {
+            String operador = (String) filtros.getOrDefault("tamanhoOperador", "=");
+            sql.append(" AND tamanho ").append(operador).append(" ?");
+            parametros.add(filtros.get("tamanhoValor"));
+        }
+        
+        sql.append(" LIMIT 500"); // Limita a 500 resultados para não sobrecarregar a UI
+
+        try (Connection conn = connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+
+            // Aplica os parâmetros no PreparedStatement
+            for (int i = 0; i < parametros.size(); i++) {
+                pstmt.setObject(i + 1, parametros.get(i));
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+
+            // Converte o ResultSet para uma lista de objetos
+            while (rs.next()) {
+                resultados.add(resultSetParaRegistro(rs));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar registros: " + e.getMessage());
+        }
+        
+        return resultados;
+    }
+
+    /**
+     * Método auxiliar para converter uma linha do ResultSet em um objeto LentidaoRegistro.
+     */
+    private LentidaoRegistro resultSetParaRegistro(ResultSet rs) throws SQLException {
+        LentidaoRegistro reg = new LentidaoRegistro();
+        reg.set_id(rs.getInt("_id"));
+        reg.setData(rs.getString("data"));
+        reg.setCorredor(rs.getString("corredor"));
+        reg.setSentido(rs.getString("sentido"));
+        reg.setExpressa(rs.getString("expressa"));
+        reg.setDescricao(rs.getString("descricao"));
+        reg.setTamanho(rs.getInt("tamanho"));
+        reg.setNome_regiao(rs.getString("nome_regiao"));
+        return reg;
     }
     // --- AQUI ENTRARÃO OS OUTROS MÉTODOS ---
     // (batchInsert, buscarRegistros, update, delete)
