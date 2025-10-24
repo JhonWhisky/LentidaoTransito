@@ -158,6 +158,57 @@ public class DatabaseManager {
         reg.setNome_regiao(rs.getString("nome_regiao"));
         return reg;
     }
+
+    /**
+     * Exclui um registro do banco de dados pelo seu _id.
+     */
+    public void deleteRegistro(int id) {
+        String sql = "DELETE FROM lentidao WHERE _id = ?";
+
+        try (Connection conn = connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Define o ID para a exclusão
+            pstmt.setInt(1, id);
+            // Executa
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao excluir registro: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Atualiza um registro existente no banco de dados.
+     */
+    public void updateRegistro(LentidaoRegistro reg) {
+        String sql = "UPDATE lentidao SET "
+                + " corredor = ?, "
+                + " sentido = ?, "
+                + " expressa = ?, "
+                + " descricao = ?, "
+                + " tamanho = ?, "
+                + " nome_regiao = ?, "
+                + " data = ? " // Permitir editar a data também
+                + " WHERE _id = ?";
+
+        try (Connection conn = connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, reg.getCorredor());
+            pstmt.setString(2, reg.getSentido());
+            pstmt.setString(3, reg.getExpressa());
+            pstmt.setString(4, reg.getDescricao());
+            pstmt.setInt(5, reg.getTamanho());
+            pstmt.setString(6, reg.getNome_regiao());
+            pstmt.setString(7, reg.getData());
+            pstmt.setInt(8, reg.get_id()); // _id é o último parâmetro (no WHERE)
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erro ao atualizar registro: " + e.getMessage());
+        }
+    }
     // --- AQUI ENTRARÃO OS OUTROS MÉTODOS ---
     // (batchInsert, buscarRegistros, update, delete)
     // Vamos adicionar o batchInsert na próxima fase.
