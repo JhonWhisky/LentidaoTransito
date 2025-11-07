@@ -1,0 +1,18 @@
+{
+  "manualTitle": "User Manual - Traffic Congestion",
+  "welcome": "Welcome to the Traffic Congestion application manual.",
+  "langLabel": "Language:",
+  "featuresTitle": "Features",
+  "syncTitle": "1. Synchronize Data",
+  "syncDesc": "The <strong>'Synchronize 2018 Data'</strong> button connects to the SP City Hall API and downloads all 161,000+ congestion records to the local database (<code>lentidao_2018.db</code>). Use this function the first time you open the app. The progress bar will show the status.",
+  "filterTitle": "2. Filter Records",
+  "filterDesc": "The filter area allows you to search the local database. After setting your filters, click <strong>'Search'</strong>. The table will update with the results (limited to 500 per search).",
+  "filterDate": "<strong>Day:</strong> Select a specific date.",
+  "filterExpressa": "<strong>Expressway:</strong> Filter by road type (A, E, or Empty).",
+  "filterCorredor": "<strong>Corridor/Direction:</strong> Search by name (e.g., 'Marginal Tietê').",
+  "filterTamanho": "<strong>Size:</strong> Set a numeric search (e.g., size > 5000).",
+  "crudTitle": "3. Manage Records (CRUD)",
+  "crudDesc": "You can manage local records directly in the table:",
+  "crudEdit": "<strong>Edit Selected:</strong> Click an item in the table, then this button. A new window will open allowing you to edit the data. Click 'Save' to confirm.",
+  "crudDelete": "<strong>Delete Selected:</strong> Click an item, then this button. A confirmation will be required before permanently deleting the record from the local database."
+}

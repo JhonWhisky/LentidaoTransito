@@ -12,7 +12,7 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+    <Label fx:id="idLabel" text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
     <TextField fx:id="idField" editable="false" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
     <Label text="Data/Hora:" GridPane.rowIndex="1" GridPane.columnIndex="0" />

@@ -1,0 +1,18 @@
+{
+  "manualTitle": "Manual de Usuario - Congestión de Tráfico",
+  "welcome": "Bienvenido al manual de la aplicación de Congestión de Tráfico.",
+  "langLabel": "Idioma:",
+  "featuresTitle": "Funcionalidades",
+  "syncTitle": "1. Sincronizar Datos",
+  "syncDesc": "El botón <strong>'Sincronizar Datos 2018'</strong> se conecta a la API del Ayuntamiento de SP y descarga todos los 161,000+ registros de congestión a la base de datos local (<code>lentidao_2018.db</code>). Use esta función la primera vez que abra la aplicación. La barra de progreso mostrará el estado.",
+  "filterTitle": "2. Filtrar Registros",
+  "filterDesc": "El área de filtros le permite buscar en la base de datos local. Después de definir sus filtros, haga clic en <strong>'Buscar'</strong>. La tabla se actualizará con los resultados (limitado a 500 por búsqueda).",
+  "filterDate": "<strong>Día:</strong> Seleccione una fecha específica.",
+  "filterExpressa": "<strong>Vía Rápida:</strong> Filtre por tipo de vía (A, E, o Vacío).",
+  "filterCorredor": "<strong>Corredor/Sentido:</strong> Busque por nombre (ej: 'Marginal Tietê').",
+  "filterTamanho": "<strong>Tamaño:</strong> Establezca una búsqueda numérica (ej: tamaño > 5000).",
+  "crudTitle": "3. Gestionar Registros (CRUD)",
+  "crudDesc": "Puede gestionar los registros locales directamente en la tabla:",
+  "crudEdit": "<strong>Editar Seleccionado:</strong> Haga clic en un elemento de la tabla y luego en este botón. Se abrirá una nueva ventana que le permitirá editar los datos. Haga clic en 'Guardar' para confirmar.",
+  "crudDelete": "<strong>Eliminar Seleccionado:</strong> Haga clic en un elemento y luego en este botón. Se requerirá confirmación antes de eliminar permanentemente el registro de la base de datos local."
+}

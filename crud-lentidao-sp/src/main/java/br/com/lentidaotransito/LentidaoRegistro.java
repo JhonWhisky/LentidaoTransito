@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 public class LentidaoRegistro {
 
     // O Gson vai usar esses nomes para ler o JSON
-    private int _id;
+    private Integer _id;
     private String data;
     private String corredor;
     private String sentido;
@@ -30,11 +30,11 @@ public class LentidaoRegistro {
         }
     }
 
-    public int get_id() {
+    public Integer get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(Integer _id) {
         this._id = _id;
     }
 

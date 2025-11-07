@@ -20,9 +20,18 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.io.InputStream;
+
 public class PrimaryController {
 
     // --- Componentes da UI (FXML) ---
+    @FXML private Button manualButton;
     @FXML private Button syncButton;
     @FXML private Label statusLabel;
     @FXML private ProgressBar progressBar;
@@ -49,6 +58,59 @@ public class PrimaryController {
     private DatabaseManager dbManager = new DatabaseManager();
     private ObservableList<LentidaoRegistro> dadosTabela = FXCollections.observableArrayList();
 
+    /**
+     * Chamado pelo botão "Ajuda / Manual".
+     * Extrai o manual (se necessário) e o abre no navegador padrão.
+     */
+    @FXML
+    private void handleAbrirManual() {
+        try {
+            // Nome da pasta do manual
+            String manualDirName = "manual_lentidao";
+            
+            // 1. Define um caminho no diretório temporário do usuário
+            Path tempDir = Files.createTempDirectory(manualDirName);
+            Path manualHtmlPath = tempDir.resolve("manual.html");
+
+            // 2. Lista de todos os arquivos do manual a serem copiados
+            String[] filesToCopy = {
+                "manual/manual.html",
+                "manual/script.js",
+                "manual/lang/pt.json",
+                "manual/lang/en.json",
+                "manual/lang/es.json"
+            };
+            
+            // 3. Cria subdiretórios necessários (ex: 'lang')
+            Files.createDirectories(tempDir.resolve("lang"));
+
+            // 4. Copia os arquivos dos 'resources' para o diretório temporário
+            for (String filePath : filesToCopy) {
+                try (InputStream is = App.class.getResourceAsStream(filePath)) {
+                    if (is == null) {
+                        throw new IOException("Arquivo de recurso não encontrado: " + filePath);
+                    }
+                    Path destPath = tempDir.resolve(filePath.substring(filePath.indexOf('/') + 1));
+                    Files.copy(is, destPath, StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+
+            // 5. Abre o manual.html no navegador padrão
+            Desktop.getDesktop().browse(manualHtmlPath.toUri());
+            statusLabel.setText("Abrindo manual...");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusLabel.setText("Erro ao abrir o manual: " + e.getMessage());
+            // Mostra um alerta de erro
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Não foi possível abrir o manual");
+            alert.setContentText("Detalhes: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+    
     /**
      * Método chamado automaticamente quando o FXML é carregado.
      */
@@ -166,6 +228,34 @@ public class PrimaryController {
         // 3. Atualizar a Tabela
         dadosTabela.setAll(resultados);
         statusLabel.setText(resultados.size() + " registros encontrados.");
+    }
+
+    /**
+     * Chamado pelo botão "Adicionar Novo".
+     * Abre a janela de edição para um registro novo e em branco.
+     */
+    @FXML
+    private void handleAdicionarRegistro() {
+        LentidaoRegistro novoRegistro = new LentidaoRegistro();
+
+        boolean foiSalvo = showRegistroEditDialog(novoRegistro);
+
+        if (foiSalvo) {
+            try {
+                // 1. Insere no banco
+                int novoId = dbManager.insertRegistro(novoRegistro);
+
+                // 2. Atualiza o objeto com o ID gerado
+                novoRegistro.set_id(novoId);
+
+                // 3. Adiciona na tabela
+                dadosTabela.add(novoRegistro);
+
+                statusLabel.setText("Novo registro " + novoId + " adicionado.");
+            } catch (Exception e) {
+                statusLabel.setText("Erro ao adicionar registro: " + e.getMessage());
+            }
+        }
     }
 
     /**

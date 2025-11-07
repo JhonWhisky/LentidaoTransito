@@ -4,9 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
 public class RegistroEditController {
 
+    @FXML private Label idLabel;
     @FXML private TextField idField;
     @FXML private TextField dataField;
     @FXML private TextField corredorField;
@@ -33,7 +35,19 @@ public class RegistroEditController {
     public void setRegistro(LentidaoRegistro registro) {
         this.registro = registro;
 
-        idField.setText(String.valueOf(registro.get_id()));
+        if (registro.get_id() != null) {
+            // Editando um registro existente
+            idField.setText(String.valueOf(registro.get_id()));
+        } else {
+            // Criando um novo registro
+            // Esconde os campos de ID
+            idField.setVisible(false);
+            idLabel.setVisible(false);
+            idField.setManaged(false); // Não ocupa espaço
+            idLabel.setManaged(false); // Não ocupa espaço
+        }
+
+        // Preenche o resto (estará vazio se for um novo registro)
         dataField.setText(registro.getData());
         corredorField.setText(registro.getCorredor());
         sentidoField.setText(registro.getSentido());

@@ -118,8 +118,8 @@ public class DatabaseManager {
             sql.append(" AND tamanho ").append(operador).append(" ?");
             parametros.add(filtros.get("tamanhoValor"));
         }
-        
-        sql.append(" LIMIT 500"); // Limita a 500 resultados para não sobrecarregar a UI
+
+        sql.append(" LIMIT 500000"); // Limita a 500000 resultados para não sobrecarregar a UI
 
         try (Connection conn = connect();
             PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
@@ -157,6 +157,39 @@ public class DatabaseManager {
         reg.setTamanho(rs.getInt("tamanho"));
         reg.setNome_regiao(rs.getString("nome_regiao"));
         return reg;
+    }
+
+    /**
+     * Insere um novo registro manual no banco e retorna o ID gerado.
+     */
+    public int insertRegistro(LentidaoRegistro reg) {
+        String sql = "INSERT INTO lentidao(data, corredor, sentido, expressa, descricao, tamanho, nome_regiao) "
+                + "VALUES(?,?,?,?,?,?,?)";
+
+        try (Connection conn = connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            pstmt.setString(1, reg.getData());
+            pstmt.setString(2, reg.getCorredor());
+            pstmt.setString(3, reg.getSentido());
+            pstmt.setString(4, reg.getExpressa());
+            pstmt.setString(5, reg.getDescricao());
+            pstmt.setInt(6, reg.getTamanho());
+            pstmt.setString(7, reg.getNome_regiao());
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1); // Retorna o ID gerado
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao inserir registro: " + e.getMessage());
+        }
+        return -1; // Retorna -1 em caso de falha
     }
 
     /**

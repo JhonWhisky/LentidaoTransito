@@ -9,6 +9,8 @@ module br.com.lentidaotransito {
     requires com.google.gson; // Para o ApiImporter (JSON)
     requires java.net.http; // Para o ApiImporter (HTTP)
 
+    requires java.desktop; // Para a classe Desktop
+
     opens br.com.lentidaotransito to javafx.fxml, com.google.gson;
     exports br.com.lentidaotransito;
 }

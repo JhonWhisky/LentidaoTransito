@@ -19,6 +19,16 @@
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.lentidaotransito.PrimaryController">
    <top>
       <VBox spacing="10.0" BorderPane.alignment="CENTER">
+         <HBox alignment="CENTER" >
+            <children>
+               <Label text="CRUD Lentidão de Trânsito - SP" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER" >
+            <children>
+               <Button fx:id="manualButton" onAction="#handleAbrirManual" text="Ajuda / Manual" />
+            </children>
+         </HBox>
          <children>
             <HBox alignment="CENTER_LEFT" spacing="10.0">
                <children>
@@ -40,7 +50,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Dia (2018):" />
+                  <Label text="Dia:" />
                   <DatePicker fx:id="filtroData" GridPane.columnIndex="1" />
                   <Label text="Expressa:" GridPane.columnIndex="2" />
                   <ComboBox fx:id="filtroExpressa" prefWidth="200.0" GridPane.columnIndex="3" />
@@ -79,6 +89,7 @@
    <bottom>
       <HBox alignment="CENTER_LEFT" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
+            <Button onAction="#handleAdicionarRegistro" text="Adicionar Novo" />
             <Button onAction="#handleExcluirRegistro" text="Excluir Selecionado" />
             <Button onAction="#handleEditarRegistro" text="Editar Selecionado" />
             </children>

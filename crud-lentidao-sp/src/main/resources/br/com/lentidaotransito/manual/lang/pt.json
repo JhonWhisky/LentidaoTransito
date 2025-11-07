@@ -1,0 +1,18 @@
+{
+  "manualTitle": "Manual do Usuário - Lentidão de Trânsito",
+  "welcome": "Bem-vindo ao manual do aplicativo de Lentidão de Trânsito.",
+  "langLabel": "Idioma:",
+  "featuresTitle": "Funcionalidades",
+  "syncTitle": "1. Sincronizar Dados",
+  "syncDesc": "O botão <strong>'Sincronizar Dados de 2018'</strong> conecta-se à API da Prefeitura de SP e baixa todos os 161.000+ registros de lentidão para o banco de dados local (<code>lentidao_2018.db</code>). Use esta função na primeira vez que abrir o app. A barra de progresso mostrará o status.",
+  "filterTitle": "2. Filtrar Registros",
+  "filterDesc": "A área de filtros permite pesquisar no banco de dados local. Após definir seus filtros, clique em <strong>'Buscar'</strong>. A tabela será atualizada com os resultados (limitados a 500 por busca).",
+  "filterDate": "<strong>Dia:</strong> Selecione uma data específica.",
+  "filterExpressa": "<strong>Expressa:</strong> Filtre por tipo de via (A, E, ou Vazio).",
+  "filterCorredor": "<strong>Corredor/Sentido:</strong> Busque por nomes (ex: 'Marginal Tietê').",
+  "filterTamanho": "<strong>Tamanho:</strong> Defina uma busca numérica (ex: tamanho > 5000).",
+  "crudTitle": "3. Gerenciar Registros (CRUD)",
+  "crudDesc": "Você pode gerenciar os registros locais diretamente na tabela:",
+  "crudEdit": "<strong>Editar Selecionado:</strong> Clique em um item na tabela e depois neste botão. Uma nova janela abrirá permitindo a edição dos dados. Clique em 'Salvar' para confirmar.",
+  "crudDelete": "<strong>Excluir Selecionado:</strong> Clique em um item e depois neste botão. Uma confirmação será pedida antes de excluir o registro permanentemente do banco local."
+}

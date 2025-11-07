@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-R">
+    <title>Manual do Usuário</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; padding: 20px; max-width: 900px; margin: 0 auto; }
+        h1, h2 { border-bottom: 2px solid #f0f0f0; padding-bottom: 5px; }
+        h2 { margin-top: 30px; }
+        code { background-color: #eee; padding: 2px 5px; border-radius: 4px; }
+        #lang-selector { margin-bottom: 20px; }
+        #lang-selector button { padding: 5px 10px; font-size: 14px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1 data-key="manualTitle">Manual do Usuário</h1>
+    <p data-key="welcome">Bem-vindo...</p>
+
+    <div id="lang-selector">
+        <strong data-key="langLabel">Idioma:</strong>
+        <button id="btn-pt">Português</button>
+        <button id="btn-en">English</button>
+        <button id="btn-es">Español</button>
+    </div>
+
+    <h2 data-key="featuresTitle">Funcionalidades</h2>
+
+    <h3 data-key="syncTitle">1. Sincronizar Dados</h3>
+    <p data-key="syncDesc">O botão...</p>
+
+    <h3 data-key="filterTitle">2. Filtrar Registros</h3>
+    <p data-key="filterDesc">A área de filtros...</p>
+    <ul>
+        <li data-key="filterDate"><strong>Dia...</strong></li>
+        <li data-key="filterExpressa"><strong>Expressa...</strong></li>
+        <li data-key="filterCorredor"><strong>Corredor...</strong></li>
+        <li data-key="filterTamanho"><strong>Tamanho...</strong></li>
+    </ul>
+
+    <h3 data-key="crudTitle">3. Gerenciar Registros (CRUD)</h3>
+    <p data-key="crudDesc">Você pode gerenciar...</p>
+    <ul>
+        <li data-key="crudEdit"><strong>Editar...</strong></li>
+        <li data-key="crudDelete"><strong>Excluir...</strong></li>
+    </ul>
+
+    <script src="script.js"></script>
+</body>
+</html>
