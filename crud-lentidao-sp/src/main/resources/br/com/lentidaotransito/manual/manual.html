@@ -1,49 +1,82 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-R">
+    <meta charset="UTF-8">
     <title>Manual do Usuário</title>
+    
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; padding: 20px; max-width: 900px; margin: 0 auto; }
         h1, h2 { border-bottom: 2px solid #f0f0f0; padding-bottom: 5px; }
         h2 { margin-top: 30px; }
-        code { background-color: #eee; padding: 2px 5px; border-radius: 4px; }
+        code { background-color: #eee; padding: 2px 5px; border-radius: 4px; font-family: "Consolas", "Courier New", monospace;}
         #lang-selector { margin-bottom: 20px; }
-        #lang-selector button { padding: 5px 10px; font-size: 14px; cursor: pointer; }
+        
+        #lang-selector button { 
+            padding: 5px 10px; 
+            font-size: 14px; 
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        #lang-selector button.active {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            border-color: #007bff;
+        }
     </style>
 </head>
 <body>
 
-    <h1 data-key="manualTitle">Manual do Usuário</h1>
-    <p data-key="welcome">Bem-vindo...</p>
+    <h1 data-key="manualTitle"></h1>
+    <p data-key="welcome"></p>
 
     <div id="lang-selector">
-        <strong data-key="langLabel">Idioma:</strong>
+        <strong data-key="langLabel"></strong>
         <button id="btn-pt">Português</button>
         <button id="btn-en">English</button>
         <button id="btn-es">Español</button>
     </div>
 
-    <h2 data-key="featuresTitle">Funcionalidades</h2>
+    <h2 data-key="syncTitle"></h2>
+    <p data-key="syncDesc"></p>
+    <img src="images/Sincronizar.png" alt="Tela de sincronização de dados">
+    <p data-key="syncProgress"></p>
+    <img src="images/Barra_de_progresso.png" alt="Tela de sincronização de dados">
+    <p data-key="syncDb"></p>
 
-    <h3 data-key="syncTitle">1. Sincronizar Dados</h3>
-    <p data-key="syncDesc">O botão...</p>
-
-    <h3 data-key="filterTitle">2. Filtrar Registros</h3>
-    <p data-key="filterDesc">A área de filtros...</p>
+    <h2 data-key="filterTitle"></h2>
+    <p data-key="filterDesc"></p>
     <ul>
-        <li data-key="filterDate"><strong>Dia...</strong></li>
-        <li data-key="filterExpressa"><strong>Expressa...</strong></li>
-        <li data-key="filterCorredor"><strong>Corredor...</strong></li>
-        <li data-key="filterTamanho"><strong>Tamanho...</strong></li>
+        <li data-key="filterDia"></li>
+        <li data-key="filterExpressa"></li>
+        <li data-key="filterCorredor"></li>
+        <li data-key="filterSentido"></li>
+        <li data-key="filterButton"></li>
+    </ul>
+    <img src="images/Busca_filtragem.png" alt="Tela de sincronização de dados">
+
+    <h2 data-key="crudTitle"></h2>
+    <p data-key="crudDesc"></p>
+    <ul>
+        <li data-key="crudAdd"></li>
+        <img src="images/Adicionar_novo1.png" alt="Tela de adição de dados">
+        <img src="images/Adicionar_novo2.png" alt="Tela de adição de dados">
+        <li data-key="crudDelete"></li>
+        <img src="images/Excluir1.png" alt="Tela de exclusão de dados">
+        <img src="images/Excluir2.png" alt="Tela de exclusão de dados">
+        <img src="images/Excluir3.png" alt="Tela de exclusão de dados">
+        <li data-key="crudEdit"></li>
+        <img src="images/Editar1.png" alt="Tela de edição de dados">
+        <img src="images/Editar2.png" alt="Tela de edição de dados">
+        <img src="images/Editar3.png" alt="Tela de edição de dados">
     </ul>
 
-    <h3 data-key="crudTitle">3. Gerenciar Registros (CRUD)</h3>
-    <p data-key="crudDesc">Você pode gerenciar...</p>
-    <ul>
-        <li data-key="crudEdit"><strong>Editar...</strong></li>
-        <li data-key="crudDelete"><strong>Excluir...</strong></li>
-    </ul>
+    <h2 data-key="helpTitle"></h2>
+    <p data-key="helpDesc"></p>
+    <img src="images/Ajuda_manual.png" alt="Tela de ajuda/manual">
 
     <script src="script.js"></script>
 </body>
