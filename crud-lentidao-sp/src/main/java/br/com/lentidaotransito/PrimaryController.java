@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,12 +20,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.Desktop;
-import java.io.File;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class PrimaryController {
 
@@ -60,53 +55,35 @@ public class PrimaryController {
 
     /**
      * Chamado pelo botão "Ajuda / Manual".
-     * Extrai o manual (se necessário) e o abre no navegador padrão.
+     * Abre a URL do manual (hospedado no Netlify) no navegador padrão do usuário.
      */
     @FXML
     private void handleAbrirManual() {
+        
+        // --- COLOQUE O SEU LINK DO NETLIFY AQUI ---
+        // Certifique-se de que o link termina com /manual.html
+        String manualUrl = "https://manual-crud-api-lentidao-transito.netlify.app/manual.html"; 
+
         try {
-            // Nome da pasta do manual
-            String manualDirName = "manual_lentidao";
-            
-            // 1. Define um caminho no diretório temporário do usuário
-            Path tempDir = Files.createTempDirectory(manualDirName);
-            Path manualHtmlPath = tempDir.resolve("manual.html");
+            // Verifica se o sistema suporta abrir um navegador
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                
+                // Abre a URL
+                Desktop.getDesktop().browse(new URI(manualUrl));
+                statusLabel.setText("Abrindo manual no navegador...");
 
-            // 2. Lista de todos os arquivos do manual a serem copiados
-            String[] filesToCopy = {
-                "manual/manual.html",
-                "manual/script.js",
-                "manual/lang/pt.json",
-                "manual/lang/en.json",
-                "manual/lang/es.json"
-            };
-            
-            // 3. Cria subdiretórios necessários (ex: 'lang')
-            Files.createDirectories(tempDir.resolve("lang"));
-
-            // 4. Copia os arquivos dos 'resources' para o diretório temporário
-            for (String filePath : filesToCopy) {
-                try (InputStream is = App.class.getResourceAsStream(filePath)) {
-                    if (is == null) {
-                        throw new IOException("Arquivo de recurso não encontrado: " + filePath);
-                    }
-                    Path destPath = tempDir.resolve(filePath.substring(filePath.indexOf('/') + 1));
-                    Files.copy(is, destPath, StandardCopyOption.REPLACE_EXISTING);
-                }
+            } else {
+                throw new UnsupportedOperationException("Abertura de navegador não suportada neste sistema.");
             }
-
-            // 5. Abre o manual.html no navegador padrão
-            Desktop.getDesktop().browse(manualHtmlPath.toUri());
-            statusLabel.setText("Abrindo manual...");
-
-        } catch (Exception e) {
+        } catch (IOException | URISyntaxException | UnsupportedOperationException e) {
             e.printStackTrace();
             statusLabel.setText("Erro ao abrir o manual: " + e.getMessage());
+            
             // Mostra um alerta de erro
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erro");
             alert.setHeaderText("Não foi possível abrir o manual");
-            alert.setContentText("Detalhes: " + e.getMessage());
+            alert.setContentText("Não foi possível abrir a URL no navegador.\nDetalhes: " + e.getMessage());
             alert.showAndWait();
         }
     }
